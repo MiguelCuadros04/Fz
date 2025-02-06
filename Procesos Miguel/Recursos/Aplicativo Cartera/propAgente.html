@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Asesor</title>
+    <link rel="icon" type="image/png" href="https://github.com/MiguelCuadros04/mio2/blob/main/Imagenes/Imagenes/Finanzauto%20Logo.png?raw=true">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            text-align: center;
+            margin: 10px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #006D68;
+            color: #ffffff;
+        }
+        input {
+            width: 90%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        .input-group {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+            color: #000000;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        .nav-button {
+            font-size: 15px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            background-color: #A4D233;
+            color: white;
+            border-radius: 5px;
+            float: left;
+        }
+        .nav-button:hover {
+            background-color: #8CCB2B;
+        }
+        .nav-button:active {
+            background-color: #7AAB2B;
+        }
+        .result-table {
+            width: 100%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .result-table th {
+            background-color: #006D68;
+            color: #ffffff;
+        }
+        .result-table td {
+            background-color: #6da5a3;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="nav-button" 
+            onclick="window.location.href='main.html'"
+            style="font-size: 15px; padding: 5px 5px; border: none; cursor: pointer; 
+           background-color: #A4D233; color: white; border-radius: 5px; 
+           float: left;"
+            onmouseover="this.style.backgroundColor='#8CCB2B'" 
+            onmouseout="this.style.backgroundColor='#A4D233'" 
+            onmousedown="this.style.backgroundColor='#7AAB2B'" 
+            onmouseup="this.style.backgroundColor='#8CCB2B'">
+            Regresar
+        </button>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: auto; width: 500px;">
+        <img src="https://github.com/MiguelCuadros04/mio2/blob/main/Imagenes/Imagenes/Finanzauto%20Logo.png?raw=true" alt="Logo" style="width: 50px; height: 50px;">
+        <h1 style="background-color: #006D68; color: #ffffff; text-align: center; padding: 10px; width: 500px; margin: auto; border-radius: 5px;">
+            Liquidador de Honorarios
+        </h1>
+    </div>
+
+    <div class="input-group">
+        <label for="numeroCredito" style="color: black;">Credito:</label>
+        <input type="text" id="numeroCredito" placeholder="Ingrese el credito">
+    </div>
+    <div class="input-group">
+        <label for="nombreCliente" style="color: black;">Nombre:</label>
+        <input type="text" id="nombreCliente" placeholder="Ingrese el nombre">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="border-radius: 8px;">Cuotas</th>
+                <th style="border-radius: 8px;">Honorarios (%)</th>
+                <th style="border-radius: 8px;">IVA (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number" id="numCuotas" min="1" value="1"></td>
+                <td><input type="number" id="honorarios" step="0.01" value="5"></td>
+                <td><input type="number" id="iva" step="0.01" value="19"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button 
+        onclick="generateTable()" 
+        style="font-size: 18px; padding: 10px 20px; border: none; cursor: pointer; background-color: #A4D233; color: white; border-radius: 5px;" 
+        onmouseover="this.style.backgroundColor='#8CCB2B'" 
+        onmouseout="this.style.backgroundColor='#A4D233'" 
+        onmousedown="this.style.backgroundColor='#7AAB2B'" 
+        onmouseup="this.style.backgroundColor='#8CCB2B'">
+        Generar tabla
+    </button>
+    
+    <div id="infoHeader" class="info-header" style="display: none; flex-direction: row; justify-content: flex-start; gap: 10px;">
+        <div style="color: #000000;"><strong>Credito:</strong> <span id="displayCredito"></span></div>
+        <div style="color: #000000;"><strong>Nombre:</strong> <span id="displayNombre"></span></div>
+    </div>
+    
+    <table id="tabla" class="result-table" style="background-color: #6da5a3;">
+        <thead>
+            <tr>
+                <th>✔</th>
+                <th>Cuota</th>
+                <th>Valor Cuota</th>
+                <th>Honorarios (%)</th>
+                <th>Valor Honorarios</th>
+                <th>IVA (%)</th>
+                <th>Valor IVA</th>
+                <th>Total Honorarios</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"><strong>Total:</strong></td>
+                <td id="totalValorCuota"></td>
+                <td></td>
+                <td id="totalValorHonorarios"></td>
+                <td></td>
+                <td id="totalValorIVA"></td>
+                <td id="totalTotalHonorarios"></td>
+                <td id="totalTotal"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        function generateTable() {
+            const numCuotas = parseInt(document.getElementById('numCuotas').value);
+            const honorariosPercentage = parseFloat(document.getElementById('honorarios').value);
+            const ivaPercentage = parseFloat(document.getElementById('iva').value);
+
+            const numeroCredito = document.getElementById('numeroCredito').value;
+            const nombreCliente = document.getElementById('nombreCliente').value;
+
+            document.getElementById('displayCredito').textContent = numeroCredito;
+            document.getElementById('displayNombre').textContent = nombreCliente;
+            document.getElementById('infoHeader').style.display = 'flex';
+
+            const tableBody = document.getElementById('tabla').querySelector('tbody');
+            tableBody.innerHTML = '';
+
+            for (let i = 1; i <= numCuotas; i++) {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td><input type="checkbox" class="checkbox" style="accent-color: #A4D233; background-image:#FFFFFF; width: 20px; height: 20px;" onchange="updateTotals()"></td>
+                    <td>${i}</td>
+                    <td><input type="number" class="valorCuota" oninput="updateRow(this)"></td>
+                    <td>${honorariosPercentage}%</td>
+                    <td class="valorHonorarios"></td>
+                    <td>${ivaPercentage}%</td>
+                    <td class="valorIVA"></td>
+                    <td class="totalHonorarios"></td>
+                    <td class="total"></td>
+                `;
+
+                tableBody.appendChild(row);
+            }
+        }
+
+        function updateRow(input) {
+            const row = input.closest('tr');
+            const valorCuota = parseFloat(input.value) || 0;
+            const honorariosPercentage = parseFloat(document.getElementById('honorarios').value);
+            const ivaPercentage = parseFloat(document.getElementById('iva').value);
+
+            const valorHonorarios = (valorCuota * honorariosPercentage) / 100;
+            const valorIVA = (valorHonorarios * ivaPercentage) / 100;
+            const totalHonorarios = valorHonorarios + valorIVA;
+            const total = valorCuota + totalHonorarios;
+
+            const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' });
+            row.querySelector('.valorHonorarios').textContent = formatter.format(valorHonorarios.toFixed(2));
+            row.querySelector('.valorIVA').textContent = formatter.format(valorIVA.toFixed(2));
+            row.querySelector('.totalHonorarios').textContent = formatter.format(totalHonorarios.toFixed(2));
+            row.querySelector('.total').textContent = formatter.format(total.toFixed(2));
+            updateTotals();
+        }
+
+        function updateTotals() {
+            let totalValorCuota = 0, totalValorHonorarios = 0, totalValorIVA = 0, totalTotalHonorarios = 0, totalTotal = 0;
+            
+            document.querySelectorAll('tr').forEach(row => {
+                const checkbox = row.querySelector('.checkbox');
+                if (checkbox && checkbox.checked) {
+                    const valorCuota = parseFloat(row.querySelector('.valorCuota').value) || 0;
+                    const valorHonorarios = parseFloat(row.querySelector('.valorHonorarios').textContent.replace(/[^0-9.-]+/g, "")) || 0;
+                    const valorIVA = parseFloat(row.querySelector('.valorIVA').textContent.replace(/[^0-9.-]+/g, "")) || 0;
+                    const totalHonorarios = parseFloat(row.querySelector('.totalHonorarios').textContent.replace(/[^0-9.-]+/g, "")) || 0;
+                    const total = parseFloat(row.querySelector('.total').textContent.replace(/[^0-9.-]+/g, "")) || 0;
+
+                    totalValorCuota += valorCuota;
+                    totalValorHonorarios += valorHonorarios;
+                    totalValorIVA += valorIVA;
+                    totalTotalHonorarios += totalHonorarios;
+                    totalTotal += total;
+                }
+            });
+
+            const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' });
+
+            document.getElementById('totalValorCuota').textContent = formatter.format(totalValorCuota.toFixed(2));
+            document.getElementById('totalValorHonorarios').textContent = formatter.format((totalValorHonorarios*1000).toFixed(2));
+            document.getElementById('totalValorIVA').textContent = formatter.format((totalValorIVA*1000).toFixed(2));
+            document.getElementById('totalTotalHonorarios').textContent = formatter.format((totalTotalHonorarios*1000).toFixed(2));
+            document.getElementById('totalTotal').textContent = formatter.format((totalTotal*1000).toFixed(2));
+        }
+    </script>
+</body>
+</html>
