@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla Principal</title>
+    <link rel="icon" type="image/png" href="https://github.com/MiguelCuadros04/mio2/blob/main/Imagenes/Imagenes/Finanzauto%20Logo.png?raw=true">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #006D68;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .header img {
+            width: 50px;
+            height: 50px;
+        }
+        .buttons {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #A4D233;
+            color: white;
+            font-size: 18px;
+            padding: 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            width: 150px;
+            height: 150px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #8CCB2B;
+        }
+        .button img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://github.com/MiguelCuadros04/mio2/blob/main/Imagenes/Imagenes/Finanzauto%20Logo.png?raw=true" alt="Logo">
+        <h1>Liquidador de Honorarios</h1>
+
+    </div>
+    
+    <div class="buttons">
+        <button class="button" onclick="location.href='propAgente.html'">
+            <img src="https://github.com/MiguelCuadros04/Fz/blob/main/Procesos%20Miguel/Recursos/img_Convenio.png?raw=true" alt="Icono 1">
+            Propuesta Asesor
+        </button>
+        
+        <button class="button" onclick="location.href='propCliente.html'">
+            <img src="https://github.com/MiguelCuadros04/Fz/blob/main/Procesos%20Miguel/Recursos/img_Cheque.png?raw=true" alt="Icono 2">
+            Propuesta Cliente
+        </button>
+        
+    </div>
+    
+    
+    <div class="footer">Creado por Riesgo Crediticio</div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Cliente</title>
+    <link rel="icon" type="image/png" href="https://github.com/MiguelCuadros04/mio2/blob/main/Imagenes/Imagenes/Finanzauto%20Logo.png?raw=true">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            text-align: center;
+            margin: 10px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #006D68;
+            color: #ffffff;
+        }
+        input {
+            width: 90%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        .input-group {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+            color: #000000;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        .nav-button {
+            font-size: 15px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            background-color: #A4D233;
+            color: white;
+            border-radius: 5px;
+            float: left;
+        }
+        .nav-button:hover {
+            background-color: #8CCB2B;
+        }
+        .nav-button:active {
+            background-color: #7AAB2B;
+        }
+        .result-table {
+            width: 100%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .result-table th {
+            background-color: #006D68;
+            color: #ffffff;
+        }
+        .result-table td {
+            background-color: #6da5a3;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="nav-button" onclick="window.location.href='main.html'">Regresar</button>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: auto; width: 500px;">
+        <img src="https://github.com/MiguelCuadros04/mio2/blob/main/Imagenes/Imagenes/Finanzauto%20Logo.png?raw=true" alt="Logo" style="width: 50px; height: 50px;">
+        <h1 style="background-color: #006D68; color: #ffffff; text-align: center; padding: 10px; width: 500px; margin: auto; border-radius: 5px;">
+            Propuesta Cliente
+        </h1>
+    </div>
+
+    <div class="input-group">
+        <label for="credito">Crédito:</label>
+        <input type="text" id="credito" placeholder="Ingrese el crédito">
+    </div>
+    <div class="input-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Ingrese el nombre">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="border-radius: 8px;">Valor Cuota</th>
+                <th style="border-radius: 8px;">Honorarios (%)</th>
+                <th style="border-radius: 8px;">IVA (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number" id="valorCuota" placeholder="Ingrese el valor de la cuota"></td>
+                <td><input type="number" id="honorarios" step="0.01" value="5"></td>
+                <td><input type="number" id="iva" step="0.01" value="19"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="calcularHonorarios()" style="font-size: 18px; padding: 10px 20px; border: none; cursor: pointer; background-color: #A4D233; color: white; border-radius: 5px;">
+        Calcular Honorarios
+    </button>
+
+    <div id="resultado" style="margin-top: 20px;">
+        <h2 style="color: #000000;">Resultado</h2>
+        <table class="result-table">
+            <thead>
+                <tr>
+                    <th>Crédito</th>
+                    <th>Nombre</th>
+                    <th>Valor Cuota</th>
+                    <th>% Honorarios</th>
+                    <th>Valor Honorarios</th>
+                    <th>% IVA</th>
+                    <th>Valor IVA</th>
+                    <th>Total Honorarios</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="resCredito"></td>
+                    <td id="resNombre"></td>
+                    <td id="resValorCuota"></td>
+                    <td id="resPorcentajeHonorarios"></td>
+                    <td id="resValorHonorarios"></td>
+                    <td id="resPorcentajeIVA"></td>
+                    <td id="resValorIVA"></td>
+                    <td id="resTotalHonorarios"></td>
+                    <td id="resTotal"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function calcularHonorarios() {
+            const credito = document.getElementById('credito').value;
+            const nombre = document.getElementById('nombre').value;
+            const valorCuota = parseFloat(document.getElementById('valorCuota').value);
+            const honorariosPercentage = parseFloat(document.getElementById('honorarios').value);
+            const ivaPercentage = parseFloat(document.getElementById('iva').value);
+
+            const valorHonorarios = (valorCuota * honorariosPercentage) / 100;
+            const valorIVA = (valorHonorarios * ivaPercentage) / 100;
+            const totalHonorarios = valorHonorarios + valorIVA;
+            const total = valorCuota - totalHonorarios;
+
+            const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' });
+
+            document.getElementById('resCredito').textContent = credito;
+            document.getElementById('resNombre').textContent = nombre;
+            document.getElementById('resValorCuota').textContent = formatter.format(valorCuota.toFixed(2));
+            document.getElementById('resPorcentajeHonorarios').textContent = honorariosPercentage + '%';
+            document.getElementById('resValorHonorarios').textContent = formatter.format(valorHonorarios.toFixed(2));
+            document.getElementById('resPorcentajeIVA').textContent = ivaPercentage + '%';
+            document.getElementById('resValorIVA').textContent = formatter.format(valorIVA.toFixed(2));
+            document.getElementById('resTotalHonorarios').textContent = formatter.format(totalHonorarios.toFixed(2));
+            document.getElementById('resTotal').textContent = formatter.format(total.toFixed(2));
+
+            document.getElementById('resultado').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
